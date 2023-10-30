@@ -1,0 +1,22 @@
+.popup__closeicon {
+  margin: 0;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  background-color: black;
+  background-image: url(../../../images/CloseIcon.svg);
+  background-size: cover;
+  position: fixed;
+  top: 163px;
+  left: calc(((100% - 430px) / 2) + 430px);
+  border: none;
+}
+
+@media screen and (max-width: 625px) {
+  .popup__closeicon {
+    width: 20px;
+    height: 20px;
+    top: 92px;
+    left: calc(((100% - 260px) / 2) + 250px);
+  }
+}

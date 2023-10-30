@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>mesto</title>
+        <link rel="stylesheet" href="./pages/index.css" />
+    </head>
+
+    <body class="body">
+        <div class="page">
+            <header class="header">
+                <img class="header__logo" src="./images/logo.svg" alt="логотип место" />
+                <hr class="header__line" />
+            </header>
+            <main class="main">
+                <section class="profile">
+                    <div class="profile__avatar">
+                        <img class="profile__foto" src="./images/avatar.jpg" alt="фото автора" />
+                    </div>
+
+                    <div class="profile__info">
+                        <p class="profile__name">Жак-Ив Кустоdfffdgdshhgdhhsdhh</p>
+                        <p class="profile__proff">Исследователь океана dfggdfshdhfjgsfdhfdhdfhh</p>
+                        <button class="profile__editbutton"></button>
+                    </div>
+
+                    <button class="profile__addbutton"></button>
+                </section>
+                <section class="elements">
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/cat1.png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">Мурыс и школа Хогвардс</p>
+                            <button class="element__like element__like_black"></button>
+                        </div>
+                    </div>
+
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/fox1.png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">Фокс и Море</p>
+                            <button class="element__like"></button>
+                        </div>
+                    </div>
+
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/cat4.png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">кот Мурыс</p>
+                            <button class="element__like"></button>
+                        </div>
+                    </div>
+
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/dog1.png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">Тоби - обезьянка</p>
+                            <button class="element__like"></button>
+                        </div>
+                    </div>
+
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/dog3 (1).png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">Тоби и новый год</p>
+                            <button class="element__like"></button>
+                        </div>
+                    </div>
+                    <div class="element">
+                        <div class="element__maskgroup">
+                            <img class="element__image" src="././images/fox2.png" />
+                        </div>
+                        <div class="element__group">
+                            <p class="element__name">Лучшие друзья</p>
+                            <button class="element__like"></button>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer class="footer">
+                <img class="footer__logo" src="./images/© 2020 Mesto Russia.png" alt="логотип место" />
+            </footer>
+        </div>
+        <div class="popup">
+            <!--<div class="popup popup_opened">-->
+
+            <form class="popup__container">
+                <h2 class="popup__title">Редактировать профиль</h2>
+                <fieldset class="popup__info">
+                    <input type="text" class="popup__input" placeholder="Жак-Ив Кусто" name="profilename" />
+                    <div class="popup__line"></div>
+                    <input type="text" class="popup__input" placeholder="Исследователь океана" name="profileprof" />
+                    <div class="popup__line"></div>
+                    <button type="submit" class="popup__button">Сохранить</button>
+                </fieldset>
+                <button class="popup__closeicon"></button>
+            </form>
+        </div>
+    </body>
+</html>

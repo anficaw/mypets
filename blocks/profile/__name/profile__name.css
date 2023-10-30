@@ -1,0 +1,19 @@
+.profile__name {
+  padding: 0;
+  margin: 0;
+  color: #fff;
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 114%; /* 114.286% */
+  max-width: 500px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 600px) {
+  .profile__name {
+    font-size: 27px;
+  }
+}

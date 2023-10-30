@@ -1,0 +1,16 @@
+.element__group {
+  margin: 0;
+  padding: 0;
+  padding-bottom: 31px;
+  padding-top: 25px;
+  padding-left: 21px;
+  padding-right: 15px;
+  max-width: calc(100% - 21px - 15px);
+
+  border-radius: 0px 0px 10px 10px;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}

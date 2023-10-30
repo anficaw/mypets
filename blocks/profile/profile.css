@@ -1,0 +1,34 @@
+.profile {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  /*width: calc(100% - (20px * 2));*/
+  margin-top: 36px;
+  box-sizing: border-box;
+
+  align-self: center;
+
+  display: grid;
+  grid-template-columns: 169px 1fr 154px;
+  grid-template-rows: auto;
+  justify-content: right;
+}
+
+@media screen and (max-width: 920px) {
+  .profile {
+    /*width: calc(100% - (50px * 2));*/
+
+    width: 621px;
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+  }
+}
+
+@media screen and (max-width: 621px) {
+  .profile {
+    /*width: calc(100% - (50px * 2));*/
+    width: 282px;
+  }
+}

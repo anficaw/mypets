@@ -1,0 +1,12 @@
+.main {
+  margin: 0 auto;
+  padding: 0;
+  width: 100%;
+  font-family: "Inter", Arial, sans-serif;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  background-color: black;
+}
