@@ -7,6 +7,7 @@
   background-color: black;
   background-size: cover;
   align-self: self-end;
+  cursor: pointer;
 }
 
 .profile__editbutton:hover {

@@ -1,7 +1,8 @@
-.element__like_black {
+.element__like_active {
   background-image: url("../../../../images/heart.svg");
+  cursor: pointer;
 }
 
-.element__like_black:hover {
+.element__like_active:hover {
   opacity: 0.5;
 }

@@ -5,7 +5,9 @@
   height: 19px;
   background-image: url("../../../images/hears.svg");
   background-size: cover;
+  background-color: transparent;
   border: 0;
+  cursor: pointer;
 }
 
 .element__like:hover {
