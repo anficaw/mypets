@@ -7,9 +7,10 @@
   background-image: url(../../../images/CloseIcon.svg);
   background-size: cover;
   position: absolute;
-  top: calc((100% - 400px) /2 );
-  left: calc((100% + 440px) /2 );
-  
+  /*top: calc((100% - 400px) /2);
+  left: calc((100% + 440px) /2);*/
+  right: -30px;
+  top: -30px;
   border: none;
   cursor: pointer;
 }

@@ -1,7 +1,7 @@
 .popup__input {
   margin: 0;
   padding: 0;
-  /*padding-bottom: 13px;*/
+  
   padding-left: 10px;
   width: 100%;
   font-family: "Inter", Arial, sans-serif;
@@ -11,6 +11,6 @@
   line-height: normal;
   border: none;
   border-bottom-style:solid;
-  border-bottom-color:  rgba (0, 0, 0, 0.2);
+  border-bottom-color: rgba(0, 0, 0, 0.2);
   border-bottom-width: 1px;
 }

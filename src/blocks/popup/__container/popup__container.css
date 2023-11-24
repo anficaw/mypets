@@ -10,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   justify-items: center;
+  position: relative;
   /*position: fixed;*/
   /*top: 195px;
   left: calc((100% - 430px) / 2);*/

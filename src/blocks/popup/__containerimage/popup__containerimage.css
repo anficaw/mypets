@@ -1,7 +1,7 @@
-.popupimage__container {
+.popup__containerimage{
   margin: auto;
   padding: 0;
-
+   
   position: relative;
   max-width: 75vw;
   max-height: 75vh;
@@ -9,7 +9,7 @@
   flex-direction: column;
   align-items: flex-start;
   justify-items: center;
-
+  
   z-index: 5;
 }
 

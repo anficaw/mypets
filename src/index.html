@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mesto</title>
   
-    
-
-    <body class="body">
+  <body class="body">
     
     <div class="page">
       <header class="header">
@@ -19,20 +17,21 @@
             <img
               class="profile__foto"
               src="<%=require('./images/avatar.jpg')%>"
-              
+              id ="avatar"
               alt="фото автора"
             />
+            <div class="profile__edavatar" id ="avataredit"></div>
+                          
           </div>
 
           <div class="profile__info">
-            <h1 class="profile__name">Жак-Ив Кустоdfffdgdshhgdhhsdhh</h1>
-            <p class="profile__proff">Исследователь океана dfggdfshdhfjgsfdhfdhdfhh
-            </p>
+            <h1 class="profile__name">Жак-Ив Кусто</h1>
             <button
               class="profile__editbutton"
               type="button"
               aria-label="редактирование профиля"
             ></button>
+            <p class="profile__proff">Исследователь океана</p>
           </div>
 
           <button
@@ -57,8 +56,6 @@
 
 
     <div class="popup" id="profile">
-      <!--<div class="popup popup_opened">-->
-
       <div class="popup__container">
         <h2 class="popup__title">Редактировать профиль</h2>
         <form class="popup__info" name="popup__info" method="POST" novalidate>
@@ -95,7 +92,7 @@
     </div>
 
     <div class="popup" id="imagefile">
-      <!--<div class="popup popup_opened">-->
+      
       <div class="popup__container">
         <h2 class="popup__title">Новое место</h2>
         <form class="popup__info" name="popup__image" method="POST" novalidate>
@@ -130,12 +127,37 @@
     </div>
 
 
-    <div class="popupimage" id="imageviu">
-      <!--<div class="popup popup_opened">-->
-      <div class="popupimage__container">
-       <img class="popupimage__image" scr="" alt="">
-       <h2 class="popupimage__title"></h2>
-       <button class="popupimage__closeicon" id="button__del__imageviu" type="button"></button>
+
+
+    <div class="popup" id="editavatar">
+      
+      <div class="popup__container">
+        <h2 class="popup__title">Обновить аватар</h2>
+        <form class="popup__info" name="popup__avatar" method="POST" novalidate>
+          <input
+            type="url"
+            class="popup__input"
+            placeholder="Ссылка на аватар"
+            name="avatarurl"
+            ID="popup__info_avatarurl"
+            required >
+
+            <span id="error-popup__info_avatarurl" class="popup__error-message"></span>
+
+          <button type="submit" class="popup__button">
+            Сохранить
+          </button>
+        </form>
+        <button class="popup__closeicon" id="button__del__avatar" type="button"></button>
+      </div>
+    </div>
+
+
+    <div class="popup popup_image" id="imageviu">
+      <div class="popup__containerimage">
+       <img class="popup__image" scr="" alt="">
+       <h2 class="popup__titleimage"></h2>
+       <button class="popup__closeicon" id="button__del__imageviu" type="button"></button>
       </div>
     </div>
 
@@ -152,11 +174,14 @@
         </div>
         <div class="element__group">
           <h2 class="element__name"></h2>
-          <button
-            class="element__like"
-            type="button"
-            aria-label="поставьте лайк"
-          ></button>
+          <div class="element__likes">
+            <button
+              class="element__like"
+              type="button"
+              aria-label="поставьте лайк"
+            ></button>
+            <p class="element__likecol"></p>
+          </div>
         </div>
       </article>
     </template>
