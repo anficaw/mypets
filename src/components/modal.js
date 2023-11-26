@@ -1,39 +1,36 @@
 
 
 export function closeByClick(evt) {
-    if (evt.target.classList.contains("popup")) {
-        const opendPopup = document.querySelector(".popup_opened");
-        opendPopup.classList.remove("popup_opened");
-    }
-    if (evt.target.classList.contains("popupimage")) {
-        const opendPopup = document.querySelector(".popupimage_opened");
-        opendPopup.classList.remove("popupimage_opened");
+    if (evt.target.classList.contains("popup_opened")) {
+        closePopup(evt.target);
     }
 }
 
 
 export function closeByEsc(evt) {
+    
     if (evt.key ==="Escape") {
-
         const opendPopup = document.querySelectorAll(".popup_opened");
         opendPopup.forEach(item=> {
-            item.classList.remove("popup_opened");
-            });
-       document.removeEventListener('keydown',closeByEsc);
+        closePopup(item);
+        });           
     }
 }
 
 
-export function openPopup(popup,modalconfig) {
+export function openPopup(popup) {
     document.addEventListener('keydown',closeByEsc);
-      
-    popup.classList.add(modalconfig.formopenclass);
+    popup.classList.add("popup_opened");
 }
   
 
-export function closePopup(popup,modalconfig) {
+export function closePopup(popup) {
     document.removeEventListener('keydown',closeByEsc);
-     
-    popup.classList.remove(modalconfig.formopenclass);
+    popup.classList.remove("popup_opened");
+    const buttonSubmit = popup.querySelector(".popup__button");
+    /*if (buttonSubmit){
+        
+    buttonSubmit.disabled = true;
+    buttonSubmit.textContent="Сохранить";}*/
 }
   

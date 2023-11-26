@@ -1,8 +1,8 @@
 import { openPopup, closeByEsc } from "./modal.js";
-import { modalconfig } from "../index.js";
+
 import { gelCards, addlike, removelike } from "./api.js";
 
-function openPopupimage(item, creatElementconfig) {
+function openimage(item, creatElementconfig) {
   const popup_imageviu = document.getElementById(
     creatElementconfig.popup_imageviu
   );
@@ -14,11 +14,11 @@ function openPopupimage(item, creatElementconfig) {
   const itemImage = item.querySelector(creatElementconfig.imageSelector);
   image.alt = itemImage.alt;
   image.src = itemImage.src;
-  openPopup(popup_imageviu, modalconfig);
-  document.addEventListener("keydown", closeByEsc);
+  openPopup(popup_imageviu);
+  
 }
 
-function likeImage(itemLike, creatElementconfig, item, newElementlike) {
+function likeImage(itemLike, creatElementconfig, item, newElementlike,userid) {
   if (itemLike.classList.contains(creatElementconfig.likeActiveClass)) {
     removelike(item._id)
       .then((data) => {
@@ -36,11 +36,13 @@ function likeImage(itemLike, creatElementconfig, item, newElementlike) {
   }
 }
 
-export function createNewElement(item, creatElementconfig, user) {
-  const shablonElement = document
-    .querySelector(creatElementconfig.shablonElement)
+export function createNewElement(item, creatElementconfig, userid) {
+  
+  const templateElement = document
+    .querySelector(creatElementconfig.templateElement)
     .content.querySelector(creatElementconfig.element);
-  const newElement = shablonElement.cloneNode(true);
+
+  const newElement = templateElement.cloneNode(true);
   const newElementName = newElement.querySelector(
     creatElementconfig.nameSelector
   );
@@ -51,34 +53,29 @@ export function createNewElement(item, creatElementconfig, user) {
   const newElementlike = newElement.querySelector(
     creatElementconfig.likecolSelector
   );
-  
+ console.log(userid);
+
   newElementimage.src = item.link;
   newElementimage.alt = item.name;
   newElementlike.textContent = item.likes.length;
 
-  console.log("hdgjhljhfdlghdljha;lsg.akgjl;gkz");
-  console.log(item.likes);
-
   const itemLike = newElement.querySelector(creatElementconfig.likeSelector);
-  
-  if (item.likes.find(cort=> cort._id === user._id)) {
-    console.log("01001010101")
+
+  if (item.likes.find((userlike) => userlike._id === userid)) {
     itemLike.classList.add(creatElementconfig.likeActiveClass);
   }
 
   newElementimage.addEventListener("click", () =>
-    openPopupimage(newElement, creatElementconfig)
+    openimage(newElement, creatElementconfig)
   );
-
-
+ 
   itemLike.addEventListener("click", () =>
-    likeImage(itemLike, creatElementconfig, item, newElementlike, user)
+    likeImage(itemLike, creatElementconfig, item, newElementlike, userid)
   );
 
   const buttonDelete = newElement.querySelector(creatElementconfig.delSelector);
 
-  //if (item.owner._id ==="38202379f8bf6202d851f61e"){
-  if (item.owner._id === user._id) {
+  if (item.owner._id === userid) {
     console.log(item.owner._id);
     buttonDelete.addEventListener("click", () => {
       gelCards(item._id)

@@ -34,8 +34,9 @@ const profile__editbutton = document.querySelector(".profile__editbutton");
 const profile__addbutton = document.querySelector(".profile__addbutton");
 const elements = document.querySelector(".elements");
 
+let userid;
 
-import { EnableValidation, resetError } from "./components/validation.js";
+import { enableValidation, resetError } from "./components/validation.js";
 import { createNewElement } from "./components/cards.js";
 import { openPopup, closePopup, closeByClick } from "./components/modal.js";
 import {
@@ -60,7 +61,7 @@ const creatElementconfig = {
   likeSelector: ".element__like",
   delSelector: ".element__del",
   likeActiveClass: "element__like_active",
-  shablonElement: ".element__template",
+  templateElement: ".element__template",
   popup_imageviu: "imageviu",
   imageText: ".popup__titleimage",
   image: ".popup__image",
@@ -69,11 +70,9 @@ const creatElementconfig = {
   non: ".element__del",
 };
 
-export const modalconfig = {
-  formopenclass: "popup_opened",
-};
 
-EnableValidation(validationconfig);
+
+enableValidation(validationconfig);
 
 function addNewElement(item) {
   elements.prepend(item);
@@ -81,50 +80,58 @@ function addNewElement(item) {
 
 
 Promise.all ([getuser(),getInitialCards()])
-  .then(([data2,data1]) => {
-    data1.reverse().forEach((item) => {
-      const newitem = createNewElement(item, creatElementconfig, data2);
+  .then(([user,card]) => {
+    card.reverse().forEach((item) => {
+      const newitem = createNewElement(item, creatElementconfig, user._id);
       addNewElement(newitem);
     });
-    profile__name.textContent = data2.name;
-    profile__proff.textContent = data2.about;
-    avatar.src = data2.avatar;
-
+    profile__name.textContent = user.name;
+    profile__proff.textContent = user.about;
+    avatar.src = user.avatar;
+    userid =  user._id;
+   
   })
   .catch((err) => console.log(err));
 
 
 function editprofile(popup_proff) {
-  EnableValidation(validationconfig);
+  
   profileName.value = profile__name.textContent;
   profileProff.value = profile__proff.textContent;
   resetError(profileForm, validationconfig);
-  openPopup(popup_proff, modalconfig);
+  openPopup(popup_proff);
 }
 
-function imageSubmitForm(event) {
+
+function handleimageSubmitForm(event) {
   event.preventDefault();
+  const item = { name: imageName.value, link: imageURL.value};
+  event.submitter.textContent="Сохранение...";
+
+  greatCards(item)
+  .then((data1) => {
    
-  const item = { name: imageName.value, link: imageURL.value };
-  
-  Promise.all ([getuser(), greatCards(item)])
-  .then(([data2,data1]) => {
-    const newItem = createNewElement(data1, creatElementconfig, data2);
+    const newItem = createNewElement(data1, creatElementconfig, userid);
     addNewElement(newItem);
     event.target.reset();
-    closePopup(popup_image, modalconfig);
+    closePopup(popup_image);
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log(err))
+  .finally(() => {
+    event.submitter.textContent="Сохранить";
+    event.submitter.disabled = true;
+  });
 }
 
 
-EnableValidation(validationconfig);
+imageForm.addEventListener("submit", handleimageSubmitForm);
 
-imageForm.addEventListener("submit", imageSubmitForm);
+function handleprofileSubmitForm(event) {
 
-function profileSubmitForm(event) {
   event.preventDefault();
-  let user = {
+  event.submitter.textContent="Сохранение...";
+
+  const user = {
     name: profileName.value,
     about: profileProff.value,
   };
@@ -132,53 +139,55 @@ function profileSubmitForm(event) {
     .then((user) => {
       profile__name.textContent = user.name;
       profile__proff.textContent = user.about;
-      closePopup(popup_proff, modalconfig);
+      closePopup(popup_proff);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      event.submitter.textContent="Сохранить";
+      event.submitter.disabled = true;
+    });
 }
 
 
-function avatarSubmitForm(event) {
+function handleavatarSubmitForm(event) {
   console.log("правильно");
   console.log(avatarUrl);
   event.preventDefault();
+  event.submitter.textContent="Сохранение...";
   let avatartt= {
     avatar: avatarUrl.value,
   };
   
-  editavatar(avatartt)
+    editavatar(avatartt)
     .then(() => {
       getuser()
       .then((user) => {
        avatar.src = user.avatar;
       })
-      closePopup(popup_avatar, modalconfig);
+      closePopup(popup_avatar);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      event.submitter.textContent="Сохранить";
+      event.submitter.disabled = true;
+    });
 
-  }
+}
 
-const formlist = document.querySelectorAll(".popup");
-
-formlist.forEach((form) => {
+const popuplist = document.querySelectorAll(".popup");
+popuplist.forEach((form) => {
   form.addEventListener("mousedown", closeByClick);
 });
 
-const buttonlist = document.querySelectorAll(".popup__button");
 
-buttonlist.forEach((butt) => {
- butt.addEventListener("click", ()=> butt.textContent="Сохранение...");
-});
+profileForm.addEventListener("submit", handleprofileSubmitForm);
 
-
-profileForm.addEventListener("submit", profileSubmitForm);
-
-avatarForm.addEventListener("submit", avatarSubmitForm);
+avatarForm.addEventListener("submit", handleavatarSubmitForm);
 
 profile__editbutton.addEventListener("click", () => editprofile(popup_proff));
 
 profile__addbutton.addEventListener("click", () =>
-  openPopup(popup_image, modalconfig)
+  openPopup(popup_image)
 );
 
 imageavatar.addEventListener("mouseover", () =>
@@ -189,19 +198,19 @@ imageavatar.addEventListener("mouseout", () =>
 );
 
 imageavatar.addEventListener("click", () =>
-  openPopup(popup_avatar, modalconfig)
+  openPopup(popup_avatar)
 );
 
 button__del__image.addEventListener("click", () =>
-  closePopup(popup_image, modalconfig)
+  closePopup(popup_image)
 );
 button__del__prof.addEventListener("click", () =>
-  closePopup(popup_proff, modalconfig)
+  closePopup(popup_proff)
 );
 button__del__imageviu.addEventListener("click", () =>
-  closePopup(popup_imageviu, modalconfig)
+  closePopup(popup_imageviu)
 );
 
 button__del__avatar.addEventListener("click", () =>
-  closePopup(popup_avatar, modalconfig)
+  closePopup(popup_avatar)
 );

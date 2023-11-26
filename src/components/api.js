@@ -6,7 +6,7 @@ const config = {
   },
 };
 
-function ChekResponse(res) {
+function сhekresponse(res) {
   if (res.ok) {
     return res.json();
   }
@@ -18,7 +18,7 @@ export const getInitialCards = () => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
     method: "GET",
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const greatCards = (card) => {
@@ -26,21 +26,21 @@ export const greatCards = (card) => {
     headers: config.headers,
     method: "POST",
     body: JSON.stringify(card),
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const gelCards = (cardid) => {
   return fetch(`${config.baseUrl}/cards/${cardid}`, {
     headers: config.headers,
     method: "DELETE",
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const getuser = () => {
   return fetch(`${config.baseUrl}/users/me`, {
     headers: config.headers,
     method: "GET",
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const edituser = (user) => {
@@ -48,7 +48,7 @@ export const edituser = (user) => {
     headers: config.headers,
     method: "PATCH",
     body: JSON.stringify(user),
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const editavatar = (avatar) => {
@@ -56,19 +56,19 @@ export const editavatar = (avatar) => {
     headers: config.headers,
     method: "PATCH",
     body: JSON.stringify(avatar),
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const addlike = (cardid) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardid}`, {
     headers: config.headers,
     method: "PUT",
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };
 
 export const removelike = (cardid) => {
   return fetch(`${config.baseUrl}/cards/likes/${cardid}`, {
     headers: config.headers,
     method: "DELETE",
-  }).then(ChekResponse);
+  }).then(сhekresponse);
 };

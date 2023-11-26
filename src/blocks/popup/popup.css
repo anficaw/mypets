@@ -5,13 +5,15 @@
   height: 100%;
   box-sizing: border-box;
   visibility: hidden;
+  opacity: 0;
   background-color: rgba(0, 0, 0, 0.5);
   font-family: "Inter", Arial, sans-serif;
   position: fixed;
   left: 0;
   top: 0;
   z-index: 4;
-  display: none; 
-  transition: 3s;
-  transition: visibility, opacity 0.8s linear;
+  display: flex; 
+  transition: visibility 0.2s, opacity 0.8s linear;
 }
+  
+

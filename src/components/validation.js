@@ -29,7 +29,7 @@ export function disableButton(button) {
   button.disabled = true;
 }
 
-function CheckForm(form, button) {
+function сheckForm(form, button) {
   if (form.checkValidity()) {
     enableButton(button);
   } else {
@@ -39,23 +39,23 @@ function CheckForm(form, button) {
 
 export function resetError(form, validationconfig) {
   const inputlist = form.querySelectorAll(validationconfig.inputselector);
-  const sabmitbutton = form.querySelector(validationconfig.buttonselector);
-  CheckForm(form, sabmitbutton);
+  const submitbutton = form.querySelector(validationconfig.buttonselector);
+  сheckForm(form, submitbutton);
   inputlist.forEach((input) => {
     handleinput(input, validationconfig);
   });
 }
 
-export function EnableValidation(validationconfig) {
+export function enableValidation(validationconfig) {
   const formlist = document.querySelectorAll(validationconfig.formselector);
   formlist.forEach((form) => {
     const sabmitbutton = form.querySelector(validationconfig.buttonselector);
-    CheckForm(form, sabmitbutton);
+    сheckForm(form, sabmitbutton);
     const inputlist = form.querySelectorAll(validationconfig.inputselector);
     inputlist.forEach((input) => {
       input.addEventListener("input", () => {
         handleinput(input, validationconfig);
-        CheckForm(form, sabmitbutton);
+        сheckForm(form, sabmitbutton);
       });
     });
   });
