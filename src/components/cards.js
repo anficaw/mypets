@@ -1,33 +1,18 @@
 import { openPopup } from "./modal.js";
 
 import { deleteCards, addLike, removeLike } from "./api.js";
-import { elements } from "../index.js";
-import { creatElementConfig } from "../index.js";
 
-console.log("55555555555555555");
-
-console.log(creatElementConfig);
-
+import { creatElementConfig, elements } from "./constants.js";
 
 const popupImageviu = document.getElementById(creatElementConfig.popupImageviu);
-
-console.log(creatElementConfig);
-console.log(popupImageviu);
-/*const imageText = popupImageviu.querySelector(creatElementConfig.imageText);
-const image = popupImageviu.querySelector(creatElementConfig.image);*/
-
+const imageText = popupImageviu.querySelector(creatElementConfig.imageText);
+const image = popupImageviu.querySelector(creatElementConfig.image);
 
 export function addNewElement(item) {
   elements.prepend(item);
 }
 
-
 function openImage(item, creatElementConfig) {
-
-  //*const popupImageviu = document.getElementById(creatElementConfig.popupImageviu);*/
-  const imageText = popupImageviu.querySelector(creatElementConfig.imageText);
-  const image = popupImageviu.querySelector(creatElementConfig.image);
-  
   imageText.textContent = item.querySelector(
     creatElementConfig.nameSelector
   ).textContent;
@@ -37,7 +22,7 @@ function openImage(item, creatElementConfig) {
   openPopup(popupImageviu);
 }
 
-function likeImage(itemLike, creatElementConfig, item, newElementLike, userId) {
+function likeImage(itemLike, creatElementConfig, item, newElementLike) {
   if (itemLike.classList.contains(creatElementConfig.likeActiveClass)) {
     removeLike(item._id)
       .then((data) => {
