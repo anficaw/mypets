@@ -10,10 +10,8 @@ export function closeByClick(evt) {
 export function closeByEsc(evt) {
     
     if (evt.key ==="Escape") {
-        const opendPopup = document.querySelectorAll(".popup_opened");
-        opendPopup.forEach(item=> {
-        closePopup(item);
-        });           
+        const opendPopups = document.querySelectorAll(".popup_opened");
+        opendPopups.forEach(closePopup);           
     }
 }
 
@@ -27,10 +25,6 @@ export function openPopup(popup) {
 export function closePopup(popup) {
     document.removeEventListener('keydown',closeByEsc);
     popup.classList.remove("popup_opened");
-    const buttonSubmit = popup.querySelector(".popup__button");
-    /*if (buttonSubmit){
-        
-    buttonSubmit.disabled = true;
-    buttonSubmit.textContent="Сохранить";}*/
+      
 }
   

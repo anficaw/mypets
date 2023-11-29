@@ -1,84 +1,101 @@
-import { openPopup, closeByEsc } from "./modal.js";
+import { openPopup } from "./modal.js";
 
-import { gelCards, addlike, removelike } from "./api.js";
+import { deleteCards, addLike, removeLike } from "./api.js";
+import { elements } from "../index.js";
+import { creatElementConfig } from "../index.js";
 
-function openimage(item, creatElementconfig) {
-  const popup_imageviu = document.getElementById(
-    creatElementconfig.popup_imageviu
-  );
-  const imageText = popup_imageviu.querySelector(creatElementconfig.imageText);
-  const image = popup_imageviu.querySelector(creatElementconfig.image);
-  imageText.textContent = item.querySelector(
-    creatElementconfig.nameSelector
-  ).textContent;
-  const itemImage = item.querySelector(creatElementconfig.imageSelector);
-  image.alt = itemImage.alt;
-  image.src = itemImage.src;
-  openPopup(popup_imageviu);
-  
+console.log("55555555555555555");
+
+console.log(creatElementConfig);
+
+
+const popupImageviu = document.getElementById(creatElementConfig.popupImageviu);
+
+console.log(creatElementConfig);
+console.log(popupImageviu);
+/*const imageText = popupImageviu.querySelector(creatElementConfig.imageText);
+const image = popupImageviu.querySelector(creatElementConfig.image);*/
+
+
+export function addNewElement(item) {
+  elements.prepend(item);
 }
 
-function likeImage(itemLike, creatElementconfig, item, newElementlike,userid) {
-  if (itemLike.classList.contains(creatElementconfig.likeActiveClass)) {
-    removelike(item._id)
+
+function openImage(item, creatElementConfig) {
+
+  //*const popupImageviu = document.getElementById(creatElementConfig.popupImageviu);*/
+  const imageText = popupImageviu.querySelector(creatElementConfig.imageText);
+  const image = popupImageviu.querySelector(creatElementConfig.image);
+  
+  imageText.textContent = item.querySelector(
+    creatElementConfig.nameSelector
+  ).textContent;
+  const itemImage = item.querySelector(creatElementConfig.imageSelector);
+  image.alt = itemImage.alt;
+  image.src = itemImage.src;
+  openPopup(popupImageviu);
+}
+
+function likeImage(itemLike, creatElementConfig, item, newElementLike, userId) {
+  if (itemLike.classList.contains(creatElementConfig.likeActiveClass)) {
+    removeLike(item._id)
       .then((data) => {
-        itemLike.classList.remove(creatElementconfig.likeActiveClass);
-        newElementlike.textContent = data.likes.length;
+        itemLike.classList.remove(creatElementConfig.likeActiveClass);
+        newElementLike.textContent = data.likes.length;
       })
       .catch((err) => console.log(err));
   } else {
-    addlike(item._id)
+    addLike(item._id)
       .then((data) => {
-        itemLike.classList.add(creatElementconfig.likeActiveClass);
-        newElementlike.textContent = data.likes.length;
+        itemLike.classList.add(creatElementConfig.likeActiveClass);
+        newElementLike.textContent = data.likes.length;
       })
       .catch((err) => console.log(err));
   }
 }
 
-export function createNewElement(item, creatElementconfig, userid) {
-  
+export function createNewElement(item, creatElementConfig, userId) {
   const templateElement = document
-    .querySelector(creatElementconfig.templateElement)
-    .content.querySelector(creatElementconfig.element);
+    .querySelector(creatElementConfig.templateElement)
+    .content.querySelector(creatElementConfig.element);
 
   const newElement = templateElement.cloneNode(true);
   const newElementName = newElement.querySelector(
-    creatElementconfig.nameSelector
+    creatElementConfig.nameSelector
   );
   newElementName.textContent = item.name;
-  const newElementimage = newElement.querySelector(
-    creatElementconfig.imageSelector
+  const newElementImage = newElement.querySelector(
+    creatElementConfig.imageSelector
   );
-  const newElementlike = newElement.querySelector(
-    creatElementconfig.likecolSelector
+  const newElementLike = newElement.querySelector(
+    creatElementConfig.likecolSelector
   );
- console.log(userid);
 
-  newElementimage.src = item.link;
-  newElementimage.alt = item.name;
-  newElementlike.textContent = item.likes.length;
+  newElementImage.src = item.link;
+  newElementImage.alt = item.name;
+  newElementLike.textContent = item.likes.length;
 
-  const itemLike = newElement.querySelector(creatElementconfig.likeSelector);
+  const itemLike = newElement.querySelector(creatElementConfig.likeSelector);
 
-  if (item.likes.find((userlike) => userlike._id === userid)) {
-    itemLike.classList.add(creatElementconfig.likeActiveClass);
+  if (item.likes.find((userLike) => userLike._id === userId)) {
+    itemLike.classList.add(creatElementConfig.likeActiveClass);
   }
 
-  newElementimage.addEventListener("click", () =>
-    openimage(newElement, creatElementconfig)
+  newElementImage.addEventListener("click", () =>
+    openImage(newElement, creatElementConfig)
   );
- 
+
   itemLike.addEventListener("click", () =>
-    likeImage(itemLike, creatElementconfig, item, newElementlike, userid)
+    likeImage(itemLike, creatElementConfig, item, newElementLike, userId)
   );
 
-  const buttonDelete = newElement.querySelector(creatElementconfig.delSelector);
+  const buttonDelete = newElement.querySelector(creatElementConfig.delSelector);
 
-  if (item.owner._id === userid) {
+  if (item.owner._id === userId) {
     console.log(item.owner._id);
     buttonDelete.addEventListener("click", () => {
-      gelCards(item._id)
+      deleteCards(item._id)
         .then(() => {
           newElement.remove();
         })

@@ -1,23 +1,23 @@
-function showError(inputFeild, errormessage, validationconfig) {
+function showError(inputFeild, errorMessage, validationConfig) {
   const spanID = "error-" + inputFeild.id;
   const spanElement = document.getElementById(spanID);
-  spanElement.textContent = errormessage;
-  inputFeild.classList.add(validationconfig.inputinvalidclass);
+  spanElement.textContent = errorMessage;
+  inputFeild.classList.add(validationConfig.inputInvalidClass);
 }
 
-function hideError(inputFeild, validationconfig) {
+function hideError(inputFeild, validationConfig) {
   const spanID = "error-" + inputFeild.id;
 
   const spanElement = document.getElementById(spanID);
   spanElement.textContent = "";
-  inputFeild.classList.remove(validationconfig.inputinvalidclass);
+  inputFeild.classList.remove(validationConfig.inputInvalidClass);
 }
 
-function handleinput(inputElement, validationconfig) {
+function handleinput(inputElement, validationConfig) {
   if (inputElement.validity.valid) {
-    hideError(inputElement, validationconfig);
+    hideError(inputElement, validationConfig);
   } else {
-    showError(inputElement, inputElement.validationMessage, validationconfig);
+    showError(inputElement, inputElement.validationMessage, validationConfig);
   }
 }
 
@@ -37,25 +37,25 @@ function сheckForm(form, button) {
   }
 }
 
-export function resetError(form, validationconfig) {
-  const inputlist = form.querySelectorAll(validationconfig.inputselector);
-  const submitbutton = form.querySelector(validationconfig.buttonselector);
-  сheckForm(form, submitbutton);
-  inputlist.forEach((input) => {
-    handleinput(input, validationconfig);
+export function resetError(form, validationConfig) {
+  const inputLists = form.querySelectorAll(validationConfig.inputSelector);
+  const submitButton = form.querySelector(validationConfig.buttonSelector);
+  сheckForm(form, submitButton);
+  inputLists.forEach((input) => {
+    handleinput(input, validationConfig);
   });
 }
 
-export function enableValidation(validationconfig) {
-  const formlist = document.querySelectorAll(validationconfig.formselector);
-  formlist.forEach((form) => {
-    const sabmitbutton = form.querySelector(validationconfig.buttonselector);
-    сheckForm(form, sabmitbutton);
-    const inputlist = form.querySelectorAll(validationconfig.inputselector);
-    inputlist.forEach((input) => {
+export function enableValidation(validationConfig) {
+  const formLists = document.querySelectorAll(validationConfig.formSelector);
+  formLists.forEach((form) => {
+    const submitButton = form.querySelector(validationConfig.buttonSelector);
+    сheckForm(form, submitButton);
+    const inputLists = form.querySelectorAll(validationConfig.inputSelector);
+    inputLists.forEach((input) => {
       input.addEventListener("input", () => {
-        handleinput(input, validationconfig);
-        сheckForm(form, sabmitbutton);
+        handleinput(input, validationConfig);
+        сheckForm(form, submitButton);
       });
     });
   });

@@ -1,60 +1,40 @@
 
 import "./styles/index.css"; // добавьте импорт главного файла стилей
 
-const button__del__prof = document.getElementById("button__del__prof");
-const button__del__image = document.getElementById("button__del__image");
-const button__del__imageviu = document.getElementById("button__del__imageviu");
-const button__del__avatar = document.getElementById("button__del__avatar");
+const buttonDelProf = document.getElementById("button__del__prof");
+const buttonDelImage = document.getElementById("button__del__image");
+const buttonDelImageviu = document.getElementById("button__del__imageviu");
+const buttonDelAvatar = document.getElementById("button__del__avatar");
 
-const popup_proff = document.getElementById("profile");
-const popup_image = document.getElementById("imagefile");
-const popup_imageviu = document.getElementById("imageviu");
-const popup_avatar = document.getElementById("editavatar");
-const profile__edavatar = document.getElementById("avataredit");
+const popupProff = document.getElementById("profile");
+const popupImage = document.getElementById("imagefile");
+const popupImageviu = document.getElementById("imageviu");
+const popupAvatar = document.getElementById("editavatar");
+const profileEdAvatar = document.getElementById("avataredit");
 
 const avatarUrl = document.getElementById("popup__info_avatarurl");
 
-const imageavatar = document.querySelector(".profile__avatar");
+const imageAvatar = document.querySelector(".profile__avatar");
 
-const imageForm = popup_image.querySelector(".popup__info");
+const imageForm = popupImage.querySelector(".popup__info");
 const imageName = document.getElementById("popup__info_imagename");
 const imageURL = document.getElementById("popup__info_imageurl");
-const profile__name = document.querySelector(".profile__name");
-const profile__proff = document.querySelector(".profile__proff");
+const profileName = document.querySelector(".profile__name");
+const profileProff = document.querySelector(".profile__proff");
 
 const avatar = document.getElementById("avatar");
 
-const profileForm = popup_proff.querySelector(".popup__info");
-const avatarForm = popup_avatar.querySelector(".popup__info");
+const profileForm = popupProff.querySelector(".popup__info");
+const avatarForm = popupAvatar.querySelector(".popup__info");
 
-const profileName = document.getElementById("popup__info_profilename");
-const profileProff = document.getElementById("popup__info_profileprof");
+const popupProfileName = document.getElementById("popup__info_profilename");
+const popupProfileProff = document.getElementById("popup__info_profileprof");
 
-const profile__editbutton = document.querySelector(".profile__editbutton");
-const profile__addbutton = document.querySelector(".profile__addbutton");
+const profileEditButton = document.querySelector(".profile__editbutton");
+const profileAddButton = document.querySelector(".profile__addbutton");
 const elements = document.querySelector(".elements");
 
-let userid;
-
-import { enableValidation, resetError } from "./components/validation.js";
-import { createNewElement } from "./components/cards.js";
-import { openPopup, closePopup, closeByClick } from "./components/modal.js";
-import {
-  getInitialCards,
-  greatCards,
-  getuser,
-  edituser,
-  editavatar,
-} from "./components/api.js";
-
-const validationconfig = {
-  formselector: ".popup__info",
-  buttonselector: ".popup__button",
-  inputselector: ".popup__input",
-  inputinvalidclass: "popup__input_invalid",
-};
-
-const creatElementconfig = {
+const creatElementConfig = {
   nameSelector: ".element__name",
   imageSelector: ".element__image",
   likecolSelector: ".element__likecol",
@@ -62,7 +42,7 @@ const creatElementconfig = {
   delSelector: ".element__del",
   likeActiveClass: "element__like_active",
   templateElement: ".element__template",
-  popup_imageviu: "imageviu",
+  popupImageviu: "imageviu",
   imageText: ".popup__titleimage",
   image: ".popup__image",
   element: ".element",
@@ -70,147 +50,165 @@ const creatElementconfig = {
   non: ".element__del",
 };
 
+ export {elements, creatElementConfig};
 
 
-enableValidation(validationconfig);
+let userId;
 
-function addNewElement(item) {
-  elements.prepend(item);
-}
+import { enableValidation, resetError } from "./components/validation.js";
+import { createNewElement, addNewElement } from "./components/cards.js";
+import { openPopup, closePopup, closeByClick } from "./components/modal.js";
+import {
+  getInitialCards,
+  getCards,
+  getUser,
+  editUser,
+  editAvatar,
+} from "./components/api.js";
+
+const validationConfig = {
+  formSelector: ".popup__info",
+  buttonSelector: ".popup__button",
+  inputSelector: ".popup__input",
+  inputInvalidClass: "popup__input_invalid",
+};
 
 
-Promise.all ([getuser(),getInitialCards()])
-  .then(([user,card]) => {
-    card.reverse().forEach((item) => {
-      const newitem = createNewElement(item, creatElementconfig, user._id);
-      addNewElement(newitem);
+
+enableValidation(validationConfig);
+
+ 
+Promise.all ([getUser(),getInitialCards()])
+  .then(([person,cards]) => {
+    cards.reverse().forEach((item) => {
+      const newItem = createNewElement(item, creatElementConfig, person._id);
+      addNewElement(newItem);
     });
-    profile__name.textContent = user.name;
-    profile__proff.textContent = user.about;
-    avatar.src = user.avatar;
-    userid =  user._id;
+    profileName.textContent = person.name;
+    profileProff.textContent = person.about;
+    avatar.src = person.avatar;
+    userId =  person._id;
    
   })
   .catch((err) => console.log(err));
 
 
-function editprofile(popup_proff) {
+export function editProfile(popupProff) {
   
-  profileName.value = profile__name.textContent;
-  profileProff.value = profile__proff.textContent;
-  resetError(profileForm, validationconfig);
-  openPopup(popup_proff);
+  popupProfileName.value = profileName.textContent;
+  popupProfileProff.value = profileProff.textContent;
+  resetError(profileForm, validationConfig);
+  openPopup(popupProff);
 }
 
 
-function handleimageSubmitForm(event) {
+function handleImageSubmitForm(event) {
   event.preventDefault();
   const item = { name: imageName.value, link: imageURL.value};
   event.submitter.textContent="Сохранение...";
 
-  greatCards(item)
-  .then((data1) => {
-   
-    const newItem = createNewElement(data1, creatElementconfig, userid);
+  getCards(item)
+  .then((card) => {
+    const newItem = createNewElement(card, creatElementConfig, userId);
     addNewElement(newItem);
     event.target.reset();
-    closePopup(popup_image);
+    event.submitter.disabled = true;
+    closePopup(popupImage);
   })
   .catch((err) => console.log(err))
   .finally(() => {
     event.submitter.textContent="Сохранить";
-    event.submitter.disabled = true;
+    
   });
-}
+
+  }
 
 
-imageForm.addEventListener("submit", handleimageSubmitForm);
+imageForm.addEventListener("submit", handleImageSubmitForm);
 
-function handleprofileSubmitForm(event) {
+function handleProfileSubmitForm(event) {
 
   event.preventDefault();
   event.submitter.textContent="Сохранение...";
 
   const user = {
-    name: profileName.value,
-    about: profileProff.value,
+    name: popupProfileName.value,
+    about: popupProfileProff.value,
   };
-  edituser(user)
+  editUser(user)
     .then((user) => {
-      profile__name.textContent = user.name;
-      profile__proff.textContent = user.about;
-      closePopup(popup_proff);
+      profileName.textContent = user.name;
+      profileProff.textContent = user.about;
+      closePopup(popupProff);
     })
     .catch((err) => console.log(err))
     .finally(() => {
       event.submitter.textContent="Сохранить";
-      event.submitter.disabled = true;
+      
     });
 }
 
 
-function handleavatarSubmitForm(event) {
-  console.log("правильно");
-  console.log(avatarUrl);
+function handleAvatarSubmitForm(event) {
+ 
   event.preventDefault();
   event.submitter.textContent="Сохранение...";
-  let avatartt= {
+  const avatarNew= {
     avatar: avatarUrl.value,
   };
   
-    editavatar(avatartt)
-    .then(() => {
-      getuser()
-      .then((user) => {
-       avatar.src = user.avatar;
-      })
-      closePopup(popup_avatar);
+    editAvatar(avatarNew)
+    .then((user) => {
+      avatar.src = user.avatar;
+      event.target.reset();
+      event.submitter.disabled = true;
+      closePopup(popupAvatar);
     })
     .catch((err) => console.log(err))
     .finally(() => {
       event.submitter.textContent="Сохранить";
-      event.submitter.disabled = true;
+      
     });
 
 }
 
-const popuplist = document.querySelectorAll(".popup");
-popuplist.forEach((form) => {
+const formLists = document.querySelectorAll(".popup");
+formLists.forEach((form) => {
   form.addEventListener("mousedown", closeByClick);
 });
 
 
-profileForm.addEventListener("submit", handleprofileSubmitForm);
+profileForm.addEventListener("submit", handleProfileSubmitForm);
 
-avatarForm.addEventListener("submit", handleavatarSubmitForm);
+avatarForm.addEventListener("submit", handleAvatarSubmitForm);
 
-profile__editbutton.addEventListener("click", () => editprofile(popup_proff));
+profileEditButton.addEventListener("click", () => editProfile(popupProff));
 
-profile__addbutton.addEventListener("click", () =>
-  openPopup(popup_image)
+profileAddButton.addEventListener("click", () =>
+  openPopup(popupImage)
 );
 
-imageavatar.addEventListener("mouseover", () =>
-  profile__edavatar.classList.add("profile__edavatar_active")
+imageAvatar.addEventListener("mouseover", () =>
+  profileEdAvatar.classList.add("profile__edavatar_active")
 );
-imageavatar.addEventListener("mouseout", () =>
-  profile__edavatar.classList.remove("profile__edavatar_active")
-);
-
-imageavatar.addEventListener("click", () =>
-  openPopup(popup_avatar)
+imageAvatar.addEventListener("mouseout", () =>
+  profileEdAvatar.classList.remove("profile__edavatar_active")
 );
 
-button__del__image.addEventListener("click", () =>
-  closePopup(popup_image)
-);
-button__del__prof.addEventListener("click", () =>
-  closePopup(popup_proff)
-);
-button__del__imageviu.addEventListener("click", () =>
-  closePopup(popup_imageviu)
+imageAvatar.addEventListener("click", () =>
+  openPopup(popupAvatar)
 );
 
-button__del__avatar.addEventListener("click", () =>
-  closePopup(popup_avatar)
+buttonDelImage.addEventListener("click", () =>
+  closePopup(popupImage)
+);
+buttonDelProf.addEventListener("click", () =>
+  closePopup(popupProff)
+);
+buttonDelImageviu.addEventListener("click", () =>
+  closePopup(popupImageviu)
+);
+
+buttonDelAvatar.addEventListener("click", () =>
+  closePopup(popupAvatar)
 );
