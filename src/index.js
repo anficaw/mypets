@@ -1,9 +1,9 @@
 import "./styles/index.css"; // добавьте импорт главного файла стилей
 
-const buttonDelProf = document.getElementById("button__del__prof");
-const buttonDelImage = document.getElementById("button__del__image");
-const buttonDelImageviu = document.getElementById("button__del__imageviu");
-const buttonDelAvatar = document.getElementById("button__del__avatar");
+const buttonClouseProf = document.getElementById("button__del__prof");
+const buttonClouseImage = document.getElementById("button__del__image");
+const buttonClouseImageView = document.getElementById("button__del__imageviu");
+const buttonClouseAvatar = document.getElementById("button__del__avatar");
 
 const popupProff = document.getElementById("profile");
 const popupImage = document.getElementById("imagefile");
@@ -32,7 +32,7 @@ const popupProfileProff = document.getElementById("popup__info_profileprof");
 const profileEditButton = document.querySelector(".profile__editbutton");
 const profileAddButton = document.querySelector(".profile__addbutton");
 
-const formLists = document.querySelectorAll(".popup");
+const formList = document.querySelectorAll(".popup");
 
 let userId;
 
@@ -42,7 +42,7 @@ import { createNewElement, addNewElement } from "./components/cards.js";
 import { openPopup, closePopup, closeByClick } from "./components/modal.js";
 import {
   getInitialCards,
-  getCards,
+  getCard,
   getUser,
   editUser,
   editAvatar,
@@ -82,7 +82,7 @@ function handleImageSubmitForm(event) {
   const item = { name: imageName.value, link: imageURL.value };
   event.submitter.textContent = "Сохранение...";
 
-  getCards(item)
+  getCard(item)
     .then((card) => {
       const newItem = createNewElement(card, creatElementConfig, userId);
       addNewElement(newItem);
@@ -138,7 +138,7 @@ function handleAvatarSubmitForm(event) {
     });
 }
 
-formLists.forEach((form) => {
+formList.forEach((form) => {
   form.addEventListener("mousedown", closeByClick);
 });
 
@@ -159,8 +159,8 @@ imageAvatar.addEventListener("mouseout", () =>
 
 imageAvatar.addEventListener("click", () => openPopup(popupAvatar));
 
-buttonDelImage.addEventListener("click", () => closePopup(popupImage));
-buttonDelProf.addEventListener("click", () => closePopup(popupProff));
-buttonDelImageviu.addEventListener("click", () => closePopup(popupImageviu));
+buttonClouseImage.addEventListener("click", () => closePopup(popupImage));
+buttonClouseProf.addEventListener("click", () => closePopup(popupProff));
+buttonClouseImageView.addEventListener("click", () => closePopup(popupImageviu));
 
-buttonDelAvatar.addEventListener("click", () => closePopup(popupAvatar));
+buttonClouseAvatar.addEventListener("click", () => closePopup(popupAvatar));

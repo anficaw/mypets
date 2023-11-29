@@ -6,8 +6,8 @@ export function closeByClick(evt) {
 
 export function closeByEsc(evt) {
   if (evt.key === "Escape") {
-    const opendPopups = document.querySelectorAll(".popup_opened");
-    opendPopups.forEach(closePopup);
+    const openedPopups = document.querySelectorAll(".popup_opened");
+    openedPopups.forEach(closePopup);
   }
 }
 

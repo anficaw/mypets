@@ -13,7 +13,7 @@ function hideError(inputFeild, validationConfig) {
   inputFeild.classList.remove(validationConfig.inputInvalidClass);
 }
 
-function handleinput(inputElement, validationConfig) {
+function handleInput(inputElement, validationConfig) {
   if (inputElement.validity.valid) {
     hideError(inputElement, validationConfig);
   } else {
@@ -38,23 +38,23 @@ function сheckForm(form, button) {
 }
 
 export function resetError(form, validationConfig) {
-  const inputLists = form.querySelectorAll(validationConfig.inputSelector);
+  const inputList = form.querySelectorAll(validationConfig.inputSelector);
   const submitButton = form.querySelector(validationConfig.buttonSelector);
   сheckForm(form, submitButton);
-  inputLists.forEach((input) => {
-    handleinput(input, validationConfig);
+  inputList.forEach((input) => {
+    handleInput(input, validationConfig);
   });
 }
 
 export function enableValidation(validationConfig) {
-  const formLists = document.querySelectorAll(validationConfig.formSelector);
-  formLists.forEach((form) => {
+  const formList = document.querySelectorAll(validationConfig.formSelector);
+  formList.forEach((form) => {
     const submitButton = form.querySelector(validationConfig.buttonSelector);
     сheckForm(form, submitButton);
     const inputLists = form.querySelectorAll(validationConfig.inputSelector);
     inputLists.forEach((input) => {
       input.addEventListener("input", () => {
-        handleinput(input, validationConfig);
+        handleInput(input, validationConfig);
         сheckForm(form, submitButton);
       });
     });

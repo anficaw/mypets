@@ -22,7 +22,7 @@ export const getInitialCards = () => {
   }).then(checkResponse);
 };
 
-export const getCards = (card) => {
+export const getCard = (card) => {
   return fetch(`${config.baseUrl}/cards`, {
     headers: config.headers,
     method: "POST",
